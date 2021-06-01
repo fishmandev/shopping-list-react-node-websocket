@@ -1,0 +1,15 @@
+version: '3.7'
+services:
+  nodejs:
+    image: node:16.2.0-slim
+    container_name: shopping-list-backend
+    working_dir: /home/node/workspace
+    tty: true
+    volumes:
+      - ./backend:/home/node/workspace
+  frontend:
+    image: node:16.2.0-slim
+    container_name: shopping-list-frontend
+    tty: true
+    volumes:
+      - ./frontend:/home/node/workspace
