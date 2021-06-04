@@ -2,11 +2,13 @@ var express = require('express');
 var logger = require('morgan');
 let helmet = require('helmet');
 let debug = require('debug')('http:500');
+let cors = require('cors');
 
 var indexRouter = require('./routes/index');
 
 var app = express();
 
+app.use(cors()); // Enable All CORS Requests
 app.use(helmet());
 app.use(logger('dev'));
 app.use(express.json());
