@@ -7,6 +7,14 @@ services:
     command: sh -c "su - node && cd /home/node/workspace && npm run dev"
     volumes:
       - ./backend:/home/node/workspace
+    depends_on:
+      - db
+  db:
+    image: mysql:8.0.24
+    container_name: shopping-list-mysqld
+    environment:
+      MYSQL_ROOT_HOST: "%"
+      MYSQL_ROOT_PASSWORD: root
   frontend:
     image: node:16.2.0-slim
     container_name: shopping-list-frontend
