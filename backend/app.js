@@ -24,7 +24,9 @@ wsServer.mount({
 let ws = require('./middleware/ws')(wsServer);
 
 app.use(ws);
-app.use(cors()); // Enable All CORS Requests
+if (process.env.CORS_ORIGIN) {
+  app.use(cors({ origin: process.env.CORS_ORIGIN }));
+}
 app.use(helmet());
 app.use(logger('dev'));
 app.use(express.json());
@@ -32,11 +34,11 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use('/', indexRouter);
 app.use((req, res, next) => {
-  res.status(404).json({'error': 'Not found 404'});
+  res.status(404).json({ 'error': 'Not found 404' });
 });
 app.use((err, req, res, next) => {
   debug(err.stack);
-  res.status(500).json({'error':'Something broke'});
+  res.status(500).json({ 'error': 'Something broke' });
 });
 
 module.exports = { app: app, server: server };
