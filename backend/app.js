@@ -21,7 +21,9 @@ wsServer.mount({
   // to accept it.
   autoAcceptConnections: false
 });
+let ws = require('./middleware/ws')(wsServer);
 
+app.use(ws);
 app.use(cors()); // Enable All CORS Requests
 app.use(helmet());
 app.use(logger('dev'));
