@@ -20,4 +20,9 @@ module.exports = {
         return res.status(404).json();
     }).catch(next);
   },
+  update: (req, res, next) => {
+    list.update(req.params.id, req.body.isBought).then(() => {
+      return res.status(204).json();
+    }).catch(next);
+  },
 };

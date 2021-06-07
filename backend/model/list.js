@@ -31,4 +31,16 @@ module.exports = {
 
     return result.getAffectedItemsCount();
   },
+  update: async (id, isBought) => {
+    let { session, table } = await getSessionTable();
+    let result = await table
+      .update()
+      .where('id=:id')
+      .set('isBought', !!isBought)
+      .bind('id', parseInt(id))
+      .execute();
+    session.close();
+
+    return result.getAffectedItemsCount();
+  }
 };
