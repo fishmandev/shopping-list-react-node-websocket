@@ -11,5 +11,13 @@ module.exports = {
     list.create(req.body.name).then(result => {
       return res.status(201).json({data: result});
     }).catch(next);
-  }
+  },
+  delete: (req, res, next) => {
+    list.delete(req.params.id).then(result => {
+      if (result === 1)
+        return res.status(204).json();
+      else
+        return res.status(404).json();
+    }).catch(next);
+  },
 };

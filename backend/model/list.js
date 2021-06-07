@@ -24,4 +24,11 @@ module.exports = {
 
     return result.getAutoIncrementValue();
   },
+  delete: async (id) => {
+    let { session, table } = await getSessionTable();
+    let result = await table.delete().where('id=:id').bind('id', parseInt(id)).execute();
+    session.close();
+
+    return result.getAffectedItemsCount();
+  },
 };
