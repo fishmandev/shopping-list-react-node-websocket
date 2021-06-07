@@ -7,4 +7,9 @@ module.exports = {
       return res.json({'items': rows});
     }).catch(next);
   },
+  create: (req, res, next) => {
+    list.create(req.body.name).then(result => {
+      return res.status(201).json({data: result});
+    }).catch(next);
+  }
 };
