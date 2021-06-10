@@ -19,7 +19,7 @@ module.exports = {
   },
   create: async (name) => {
     let { session, table } = await getSessionTable();
-    let result = await table.insert(['name', 'isBought']).values(name, true).execute();
+    let result = await table.insert(['name', 'isBought']).values(name, false).execute();
     session.close();
 
     return result.getAutoIncrementValue();
