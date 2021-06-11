@@ -1,3 +1,45 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, Helvetica, Arial, sans-serif;
+  height: auto;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .App {
   text-align: center;
+  width: 80vw;
+  max-width: 768px;
+  height: auto;
+  margin: 40px auto;
+  border-radius: 10px;
+  background: #ffffff;
+}
+
+.Loader {
+position: absolute;
+top: calc(50% - 1em);
+left: calc(50% - 4em);
+width: 3em;
+height: 3em;
+border: 0.3em solid rgba(180, 180, 180, 0.5);
+border-left: 0.3em solid #000000;
+border-radius: 50%;
+animation: load 1.5s infinite linear;
+}
+
+@keyframes load {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
