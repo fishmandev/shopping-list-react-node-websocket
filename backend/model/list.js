@@ -10,7 +10,7 @@ const getSessionTable = async () => {
 module.exports = {
   fetchAll: async () => {
     let { session, table } = await getSessionTable();
-    let result = await table.select().execute();
+    let result = await table.select().orderBy('isBought').execute();
     session.close();
 
     return result.fetchAll().map(value => (
