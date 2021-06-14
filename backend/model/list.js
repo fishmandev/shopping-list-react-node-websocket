@@ -42,5 +42,12 @@ module.exports = {
     session.close();
 
     return result.getAffectedItemsCount();
+  },
+  deleteMadePurchases: async () => {
+    let { session, table } = await getSessionTable();
+    let result = await table.delete().where('isBought=true').execute();
+    session.close();
+
+    return result.getAffectedItemsCount();
   }
 };
