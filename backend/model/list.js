@@ -19,7 +19,7 @@ module.exports = {
         FROM \`${schemaName}\`.list AS l 
         INNER JOIN \`${schemaName}\`.product AS p 
         ON l.product_id=p.id
-        ORDER BY (l.isBought)
+        ORDER BY l.isBought ASC, p.category_id DESC, l.id DESC
         `
       )
       .execute();
