@@ -9,17 +9,29 @@ const getSessionTable = async () => {
 
 module.exports = {
   fetchAll: async () => {
-    let { session, table } = await getSessionTable();
-    let result = await table.select().orderBy('isBought').execute();
+    let session = await mysql.getSession();
+    let schemaName = session.getDefaultSchema().getName();
+    console.log(schemaName);
+    let result = await session
+      .sql(
+        `
+        SELECT l.id, p.name, l.isBought 
+        FROM \`${schemaName}\`.list AS l 
+        INNER JOIN \`${schemaName}\`.product AS p 
+        ON l.product_id=p.id
+        ORDER BY (l.isBought)
+        `
+      )
+      .execute();
     session.close();
 
     return result.fetchAll().map(value => (
       { 'id': value[0], 'name': value[1], 'isBought': value[2] }
     ));
   },
-  create: async (name) => {
+  create: async (productId) => {
     let { session, table } = await getSessionTable();
-    let result = await table.insert(['name', 'isBought']).values(name, false).execute();
+    let result = await table.insert(['product_id', 'isBought']).values(productId, false).execute();
     session.close();
 
     return result.getAutoIncrementValue();
