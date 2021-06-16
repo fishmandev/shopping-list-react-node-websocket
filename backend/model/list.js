@@ -11,7 +11,6 @@ module.exports = {
   fetchAll: async () => {
     let session = await mysql.getSession();
     let schemaName = session.getDefaultSchema().getName();
-    console.log(schemaName);
     let result = await session
       .sql(
         `
