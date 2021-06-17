@@ -24,5 +24,21 @@ module.exports = {
     session.close();
 
     return result.getAutoIncrementValue();
+  },
+  search: async (query) => {
+    // Removes wildcards from the query
+    query = query.replace(/%|_/g, '');
+    
+    let { session, table } = await getSessionTable();
+    let result = await table
+      .select('id', 'name')
+      .where('name LIKE :query')
+      .bind('query', `${query}%`)
+      .execute();
+    session.close();
+
+    return result.fetchAll().map(value => (
+      { 'id': value[0], 'name': value[1] }
+    ));
   }
 }
