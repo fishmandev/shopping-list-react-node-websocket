@@ -1,0 +1,9 @@
+const product = require('../model/product');
+
+module.exports = {
+  query: (req, res, next) => {
+    product.search(req.body.query).then(rows => {
+      return res.json({ 'items': rows });
+    }).catch(next);
+  }
+};
