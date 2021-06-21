@@ -5,11 +5,12 @@ let debug = require('debug')('http:500');
 let cors = require('cors');
 let wsServer = require('./websocket');
 
-var indexRouter = require('./routes/index');
-var listRouter = require('./routes/list');
-var systemRouter = require('./routes/system');
+let indexRouter = require('./routes/index');
+let listRouter = require('./routes/list');
+let systemRouter = require('./routes/system');
+let searchRouter = require('./routes/search');
 
-var app = express();
+let app = express();
 /**
  * Create HTTP server.
  */
@@ -37,6 +38,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/', indexRouter);
 app.use('/lists', listRouter);
 app.use('/system', systemRouter);
+app.use('/search', searchRouter);
 
 app.use((req, res, next) => {
   res.status(404).json({ 'error': 'Not found 404' });
