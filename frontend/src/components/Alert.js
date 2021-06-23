@@ -10,7 +10,12 @@ const Alert = ({ message }) => {
 
   return (
     <>
-      {showAlert && (<div>{message}</div>)}
+      {showAlert && (
+        <div className="Alert">
+          <span className="Closebtn" onClick={() => setShowAlert(false)}>&times;</span>
+          {message}
+        </div>
+      )}
     </>
   )
 }
