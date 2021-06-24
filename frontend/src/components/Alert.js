@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import './Alert.css';
 
 const Alert = ({ message }) => {
   const [showAlert, setShowAlert] = useState(true);
