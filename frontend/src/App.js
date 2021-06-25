@@ -2,12 +2,14 @@ import { useState, useEffect } from 'react';
 import useList from './api/useList';
 import CreateItemInput from './components/CreateItemInput';
 import List from './components/List';
+import Alert from './components/Alert';
 import './App.css';
 
 function App() {
   const [list, setList] = useState([]);
   const [item, setItem] = useState('');
   const [isLoaded, setIsLoaded] = useState(false);
+  const [isError, setIsError] = useState(false);
   const api = useList();
 
   useEffect(() => {
@@ -23,7 +25,13 @@ function App() {
     }
     const fetchList = () => {
       setIsLoaded(true);
-      api.read().then(setList).finally(() => { setIsLoaded(false) });
+      setIsError(false);
+      api.read()
+        .then(setList)
+        .catch(err => {
+          setIsError(true);
+        })
+        .finally(() => { setIsLoaded(false) });
     }
     wsConnect();
     fetchList();
@@ -55,6 +63,7 @@ function App() {
   return (
     <div className="App">
       <div>
+        {isError && <Alert message="Something went wrong..." />}
         <CreateItemInput
           value={item}
           onCreateItemChange={onCreateItemChange}
@@ -66,7 +75,7 @@ function App() {
           onDelete={onDelete}
         />
       </div>
-      { isLoaded && <div className="Loader"></div>}
+      {isLoaded && <div className="Loader"></div>}
     </div>
   );
 }
