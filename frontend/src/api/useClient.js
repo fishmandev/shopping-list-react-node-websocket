@@ -21,6 +21,10 @@ const useClient = () => {
           if (response.status === 200 || response.status === 201)
             return response.json();
           return '';
+        } else {
+          return response.text().then((err) => {
+            throw new Error(err);
+          });
         }
       });
   };

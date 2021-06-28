@@ -45,7 +45,12 @@ function App() {
 
   const onDelete = (id) => {
     setIsLoaded(true);
-    api.remove(id).finally(() => { setIsLoaded(false) });
+    setIsError(false);
+    api.remove(id)
+    .catch((err) => {
+      setIsError(true);
+    })
+    .finally(() => { setIsLoaded(false) });
   };
 
   const onCreateItemChange = (value) => setItem(value);
