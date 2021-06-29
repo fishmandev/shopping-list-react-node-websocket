@@ -1,7 +1,7 @@
-version: '3.7'
+version: '3.9'
 services:
   nodejs:
-    image: node:16.2.0-slim
+    image: node:16.3.0-slim
     container_name: shopping-list-backend
     working_dir: /home/node/workspace
     command: sh -c "su - node && cd /home/node/workspace && npm run dev"
@@ -16,7 +16,7 @@ services:
       MYSQL_ROOT_HOST: "%"
       MYSQL_ROOT_PASSWORD: root
   frontend:
-    image: node:16.2.0-slim
+    image: node:16.3.0-slim
     working_dir: /home/node/workspace
     container_name: shopping-list-frontend
     command: sh -c "su - node && cd /home/node/workspace && yarn start"
