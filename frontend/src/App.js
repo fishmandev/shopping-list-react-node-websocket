@@ -40,17 +40,22 @@ function App() {
 
   const onChangeBuyStatus = ({ target: { checked, dataset: { id } } }) => {
     setIsLoaded(true);
-    api.update([id], checked).finally(() => { setIsLoaded(false) });
+    setIsError(false);
+    api.update([id], checked)
+      .catch((err) => {
+        setIsError(true);
+      })
+      .finally(() => { setIsLoaded(false) });
   };
 
   const onDelete = (id) => {
     setIsLoaded(true);
     setIsError(false);
     api.remove(id)
-    .catch((err) => {
-      setIsError(true);
-    })
-    .finally(() => { setIsLoaded(false) });
+      .catch((err) => {
+        setIsError(true);
+      })
+      .finally(() => { setIsLoaded(false) });
   };
 
   const onCreateItemChange = (value) => setItem(value);
