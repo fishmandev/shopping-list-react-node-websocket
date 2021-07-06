@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import useList from './api/useList';
-import CreateItemInput from './components/CreateItemInput';
+import Autocomplete from './components/Autocomplete';
 import List from './components/List';
 import Alert from './components/Alert';
 import './App.css';
@@ -65,16 +65,18 @@ function App() {
       return; // Not valid
     }
     setIsLoaded(true);
-    api.create(item).then(() => {
-      setItem('');
-    }).finally(() => { setIsLoaded(false) });
+    setIsError(false);
+    api.create(item)
+      .then(() => setItem(''))
+      .catch(() => setIsError(true))
+      .finally(() => setIsLoaded(false));
   };
 
   return (
     <div className="App">
       <div>
         {isError && <Alert message="Something went wrong..." />}
-        <CreateItemInput
+        <Autocomplete
           value={item}
           onCreateItemChange={onCreateItemChange}
           onCreateItem={onCreateItem}
