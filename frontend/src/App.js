@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import useList from './api/useList';
 import Autocomplete from './components/Autocomplete';
+import useProduct from './api/useProduct';
 import List from './components/List';
 import Alert from './components/Alert';
 import './App.css';
@@ -8,9 +9,11 @@ import './App.css';
 function App() {
   const [list, setList] = useState([]);
   const [item, setItem] = useState('');
+  const [suggestions, setSuggestions] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const [isError, setIsError] = useState(false);
   const api = useList();
+  const product = useProduct();
 
   useEffect(() => {
     const wsConnect = () => {
@@ -58,7 +61,16 @@ function App() {
       .finally(() => { setIsLoaded(false) });
   };
 
-  const onCreateItemChange = (value) => setItem(value);
+  const onChangeAutocompleteHandler = (query) => {
+    setItem(query);
+    if (query.length > 0) {
+      product.search(query).then((data) => {
+        setSuggestions(data.items);
+      });
+    } else {
+      setSuggestions([]);
+    }
+  };
 
   const onCreateItem = () => {
     if (!item) {
@@ -78,7 +90,8 @@ function App() {
         {isError && <Alert message="Something went wrong..." />}
         <Autocomplete
           value={item}
-          onCreateItemChange={onCreateItemChange}
+          suggestions={suggestions}
+          onChangeHandler={onChangeAutocompleteHandler}
           onCreateItem={onCreateItem}
         />
         <List
