@@ -64,9 +64,11 @@ function App() {
   const onChangeAutocompleteHandler = (query) => {
     setItem(query);
     if (query.length > 0) {
+      setIsLoaded(true);
       product.search(query).then((data) => {
         setSuggestions(data.items);
-      });
+      })
+        .finally(() => setIsLoaded(false));
     } else {
       setSuggestions([]);
     }
