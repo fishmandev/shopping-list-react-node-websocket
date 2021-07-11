@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import './Autocomplete.css';
 
-const Autocomplete = ({ suggestions, value, onChangeHandler, onCreateItem }) => {
+const Autocomplete = ({ suggestions, value, onChangeHandler, onCreateItem, onBlurHandler }) => {
   const searchInput = useRef(null);
 
   const onKeyPress = (e) => {
@@ -21,6 +21,7 @@ const Autocomplete = ({ suggestions, value, onChangeHandler, onCreateItem }) => 
         type="text"
         onChange={e => onChangeHandler(e.target.value)}
         onKeyPress={onKeyPress}
+        onBlur={onBlurHandler}
         value={value}
       />
       {suggestions && suggestions.map((item) =>

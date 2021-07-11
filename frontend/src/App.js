@@ -74,6 +74,12 @@ function App() {
     }
   };
 
+  const onBlurAutocompleteHandler = () => {
+    setTimeout(() => {
+      setSuggestions([]);
+    }, 200);
+  }
+
   const onCreateItem = () => {
     if (!item) {
       return; // Not valid
@@ -95,6 +101,7 @@ function App() {
           suggestions={suggestions}
           onChangeHandler={onChangeAutocompleteHandler}
           onCreateItem={onCreateItem}
+          onBlurHandler={onBlurAutocompleteHandler}
         />
         <List
           list={list}
